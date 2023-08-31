@@ -1,0 +1,877 @@
+{
+	"info": {
+		"_postman_id": "c24cfac9-ecd5-48bc-84fd-4d1511409f92",
+		"name": "MY ADMIN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28526303"
+	},
+	"item": [
+		{
+			"name": "Default",
+			"item": [
+				{
+					"name": "Status Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_ADMIN}}/api/v1/status-check",
+							"host": [
+								"{{API_ADMIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"status-check"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADMIN}}/api/v1/auth/login",
+							"host": [
+								"{{API_ADMIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"username\": \"\",\r\n  \"email\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ADMIN}}/api/v1/auth/register",
+							"host": [
+								"{{API_ADMIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Master Data",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Lists",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "efc62871-2877-4450-b495-67e6d7b7531e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"\",\r\n\t\"username\": \"\",\r\n\t\"email\": \"\",\r\n\t\"updated_by\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "efc62871-2877-4450-b495-67e6d7b7531e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "efc62871-2877-4450-b495-67e6d7b7531e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Role",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"roles\": [\r\n        {\r\n            \"user_id\": \"\",\r\n            \"role_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users/roles/assign",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"roles",
+										"assign"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unassign Role",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"roles\": [\r\n        {\r\n            \"user_id\": \"\",\r\n            \"role_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/users/roles/unassign",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"roles",
+										"unassign"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Lists",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8e748998-417a-4d32-b590-a23d10b300be"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8e748998-417a-4d32-b590-a23d10b300be"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8e748998-417a-4d32-b590-a23d10b300be"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Attach Permission",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"permissions\": [\r\n        {\r\n            \"role_id\": \"\",\r\n            \"permission_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/permissions",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dettach Permission",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"permissions\": [\r\n        {\r\n            \"role_id\": \"\",\r\n            \"permission_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/permissions/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5b1ca48f-8ba5-4aa5-b6a6-7f49240744ba"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Attach Menu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"menus\": [\r\n        {\r\n            \"role_id\": \"\",\r\n            \"menu_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/menus",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"menus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detach Menu",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"menus\": [\r\n        {\r\n            \"role_id\": \"\",\r\n            \"menu_id\": \"\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/roles/menus/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"roles",
+										"menus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "b1260046-7e8f-4f93-95c3-1e2b3a968ca5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Permissions",
+					"item": [
+						{
+							"name": "Lists",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/permissions",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/permissions/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4966aa42-e5c7-4ca3-b91c-6e21c198a805"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/permissions",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/permissions/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6bd96f61-2435-4876-bc0f-492f82b1dab9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/permissions/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6bd96f61-2435-4876-bc0f-492f82b1dab9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Menus",
+					"item": [
+						{
+							"name": "Lists",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/menus",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"menus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/menus/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"menus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6120afb6-e15e-4773-8a4e-56da2198175c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"url\": \"\",\r\n    \"icon\": \"\",\r\n    \"ord\": 1,\r\n    \"parent_id\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/menus",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"menus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"url\": \"\",\r\n    \"icon\": \"\",\r\n    \"ord\": 1,\r\n    \"parent_id\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/menus/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"menus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6120afb6-e15e-4773-8a4e-56da2198175c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_ADMIN}}/api/v1/menus/:id",
+									"host": [
+										"{{API_ADMIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"menus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6120afb6-e15e-4773-8a4e-56da2198175c"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

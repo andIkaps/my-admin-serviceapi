@@ -1,0 +1,1177 @@
+definitions:
+  entity.RoleMenu:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      id:
+        type: string
+      menu_id:
+        type: string
+      role_id:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  entity.RolePermission:
+    properties:
+      id:
+        type: string
+      permission_id:
+        type: string
+      role_id:
+        type: string
+    type: object
+  entity.UserRole:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      id:
+        type: string
+      role_id:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      user_id:
+        type: string
+    type: object
+  helper.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  request.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.MenuRequest:
+    properties:
+      created_by:
+        type: string
+      icon:
+        type: string
+      name:
+        type: string
+      ord:
+        type: integer
+      parent_id:
+        type: string
+      updated_by:
+        type: string
+      url:
+        type: string
+    required:
+    - name
+    - ord
+    - url
+    type: object
+  request.PermissionRequest:
+    properties:
+      created_by:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      updated_by:
+        type: string
+    required:
+    - name
+    type: object
+  request.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - username
+    type: object
+  request.RoleHasMenu:
+    properties:
+      menus:
+        items:
+          $ref: '#/definitions/entity.RoleMenu'
+        type: array
+    type: object
+  request.RoleHasPermission:
+    properties:
+      permissions:
+        items:
+          $ref: '#/definitions/entity.RolePermission'
+        type: array
+    type: object
+  request.RoleRequest:
+    properties:
+      created_by:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      updated_by:
+        type: string
+    required:
+    - name
+    type: object
+  request.UserHasRole:
+    properties:
+      roles:
+        items:
+          $ref: '#/definitions/entity.UserRole'
+        type: array
+    type: object
+  request.UserUpdateRequest:
+    properties:
+      created_by:
+        description: Password  string `json:"password" validate:"required,min=8"`
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      updated_by:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - name
+    - username
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Api Service boilerplate dari golang gin dan gorm
+  termsOfService: http://swagger.io/terms/
+  title: My Admin Service Api
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Handle login user and return the received data.
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Login User
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Handle register user and return the received data.
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Register User
+      tags:
+      - Auth
+  /menus:
+    get:
+      consumes:
+      - application/json
+      description: REST API Menu
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list menu (requires authentication)
+      tags:
+      - Menus
+    post:
+      consumes:
+      - application/json
+      description: REST API menu
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Insert menu
+      tags:
+      - Menus
+  /menus/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: REST API menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete menu
+      tags:
+      - Menus
+    get:
+      consumes:
+      - application/json
+      description: REST API menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one menu
+      tags:
+      - Menus
+    put:
+      consumes:
+      - application/json
+      description: REST API menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Update menu
+      tags:
+      - Menus
+  /permissions:
+    get:
+      consumes:
+      - application/json
+      description: REST API for permission
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list permission
+      tags:
+      - Permissions
+    post:
+      consumes:
+      - application/json
+      description: REST API for Permissions
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.PermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Insert Permissions
+      tags:
+      - Permissions
+  /permissions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: REST API for Permissions
+      parameters:
+      - description: Permissions ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete Permissions
+      tags:
+      - Permissions
+    get:
+      consumes:
+      - application/json
+      description: REST API for Permissions
+      parameters:
+      - description: Permissions ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one Permissions
+      tags:
+      - Permissions
+    put:
+      consumes:
+      - application/json
+      description: REST API for Permissions
+      parameters:
+      - description: Permissions ID
+        in: query
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.PermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Update Permissions
+      tags:
+      - Permissions
+  /privileges:
+    get:
+      consumes:
+      - application/json
+      description: REST API for Privileges
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list Privileges
+      tags:
+      - Privilege
+  /privileges/{id}:
+    get:
+      consumes:
+      - application/json
+      description: REST API for Privileges
+      parameters:
+      - description: Privileges ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one Privileges
+      tags:
+      - Privilege
+  /roles:
+    get:
+      consumes:
+      - application/json
+      description: REST API for Roles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list Roles
+      tags:
+      - Roles
+    post:
+      consumes:
+      - application/json
+      description: REST API for Roles
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Insert Roles
+      tags:
+      - Roles
+  /roles/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: REST API for Roles
+      parameters:
+      - description: Roles ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete Roles
+      tags:
+      - Roles
+    get:
+      consumes:
+      - application/json
+      description: REST API for Roles
+      parameters:
+      - description: Roles ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one Roles
+      tags:
+      - Roles
+    put:
+      consumes:
+      - application/json
+      description: REST API for Roles
+      parameters:
+      - description: Roles ID
+        in: query
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Update Roles
+      tags:
+      - Roles
+  /roles/menu:
+    delete:
+      consumes:
+      - application/json
+      description: REST API Role Menu
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleHasMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Detach role has menus
+      tags:
+      - Roles
+  /roles/menus:
+    post:
+      consumes:
+      - application/json
+      description: REST API Role Menu
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleHasMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Attach role has menu
+      tags:
+      - Roles
+  /roles/permissions:
+    delete:
+      consumes:
+      - application/json
+      description: REST API Role Permission
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleHasPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Detach role has permissions
+      tags:
+      - Roles
+      - Roles
+    post:
+      consumes:
+      - application/json
+      description: REST API Role Permission
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleHasPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Attach role has permissions
+      tags:
+      - Roles
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: REST API for Users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list Users
+      tags:
+      - Users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: REST API for Users
+      parameters:
+      - description: Users ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete Users
+      tags:
+      - Users
+    get:
+      consumes:
+      - application/json
+      description: REST API for Users
+      parameters:
+      - description: Users ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one Users
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: REST API for Users
+      parameters:
+      - description: Users ID
+        in: query
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Update Users
+      tags:
+      - Users
+  /users/roles/assign:
+    post:
+      consumes:
+      - application/json
+      description: REST API User Role
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserHasRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Attach user has role
+      tags:
+      - Users
+  /users/roles/unassign:
+    delete:
+      consumes:
+      - application/json
+      description: REST API User Role
+      parameters:
+      - description: Users ID
+        in: query
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserHasRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Detach user has role
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
