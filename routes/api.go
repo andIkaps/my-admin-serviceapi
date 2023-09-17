@@ -28,6 +28,7 @@ func ApiRouter(db config.Database) {
 	// Repository Asset
 	userRepo := repository.NewUserRepository(db)
 	roleRepo := repository.NewRoleRepository(db)
+	menuSectionRepo := repository.NewMenuSectionRepository(db)
 	menuRepo := repository.NewMenuRepository(db)
 	privilegeRepo := repository.NewPrivilegeRepository(db)
 	userRoleRepo := repository.NewUserRoleRepository(db)
@@ -39,6 +40,7 @@ func ApiRouter(db config.Database) {
 	userService := service.NewUserService(userRepo)
 	authService := service.NewAuthService(userRepo)
 	roleService := service.NewRoleService(roleRepo)
+	menuSectionService := service.NewMenuSectionService(menuSectionRepo)
 	menuService := service.NewMenuService(menuRepo)
 	privilegeService := service.NewPrivilegeService(privilegeRepo)
 	userRoleService := service.NewUserRoleService(userRoleRepo)
@@ -50,6 +52,7 @@ func ApiRouter(db config.Database) {
 	userController := controller.NewUserController(userService, userRoleService)
 	authController := controller.NewAuthController(userService, authService)
 	roleController := controller.NewRoleController(roleService, roleMenuService, rolePermissionService)
+	menuSectionController := controller.NewMenuSectionController(menuSectionService)
 	menuController := controller.NewMenuController(menuService)
 	privilegeController := controller.NewPrivilegeController(privilegeService)
 	permController := controller.NewPermissionController(permissionService)
@@ -61,7 +64,7 @@ func ApiRouter(db config.Database) {
 	httpRouter.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Content-Type", "Accept"},
+		AllowHeaders:     []string{"Content-Type", "Accept", "Authorization"},
 		AllowCredentials: true,
 	}))
 
@@ -117,6 +120,13 @@ func ApiRouter(db config.Database) {
 	// Role permission routes
 	auth.POST("/roles/permissions", roleController.AttachPermission)
 	auth.DELETE("/roles/permissions/:id", roleController.DetachPermission)
+
+	// Menu Sections routes
+	auth.POST("/menu-section", menuSectionController.Store)
+	auth.GET("/menu-section", menuSectionController.Index)
+	auth.GET("/menu-section/:id", menuSectionController.Show)
+	auth.PUT("/menu-section/:id", menuSectionController.Update)
+	auth.DELETE("/menu-section/:id", menuSectionController.Delete)
 
 	// Menus routes
 	auth.POST("/menus", menuController.Store)

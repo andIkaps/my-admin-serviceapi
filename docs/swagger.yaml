@@ -241,6 +241,176 @@ paths:
       summary: Register User
       tags:
       - Auth
+  /menu-section:
+    get:
+      consumes:
+      - application/json
+      description: REST API Menu Section
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get list menu section (requires authentication)
+      tags:
+      - Menu Sections
+    post:
+      consumes:
+      - application/json
+      description: REST API menu section
+      parameters:
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Insert menu section
+      tags:
+      - Menu Sections
+  /menu-section/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: REST API menu section
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete menu section
+      tags:
+      - Menu Sections
+    get:
+      consumes:
+      - application/json
+      description: REST API menu section
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one menu section
+      tags:
+      - Menu Sections
+    put:
+      consumes:
+      - application/json
+      description: REST API menu section
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        type: string
+      - description: Input data in JSON format
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - BearerAuth: []
+      summary: Update menu section
+      tags:
+      - Menu Sections
   /menus:
     get:
       consumes:

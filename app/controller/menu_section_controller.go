@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"myadmin/app/formatter"
 	"myadmin/app/request"
 	"myadmin/app/service"
 	"myadmin/helper"
@@ -9,19 +10,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type MenuController struct {
-	service service.MenuService
+type MenuSectionController struct {
+	service service.MenuSectionService
 }
 
-func NewMenuController(s service.MenuService) MenuController {
-	return MenuController{
+func NewMenuSectionController(s service.MenuSectionService) MenuSectionController {
+	return MenuSectionController{
 		service: s,
 	}
 }
 
-// @Summary		Get list menu (requires authentication)
-// @Description	REST API Menu
-// @Tags		Menus
+// @Summary		Get list menu section (requires authentication)
+// @Description	REST API Menu Section
+// @Tags		Menu Sections
 // @Accept		json
 // @Produce		json
 // @Security	BearerAuth
@@ -29,26 +30,26 @@ func NewMenuController(s service.MenuService) MenuController {
 // @Failure		400	{object}	helper.Response
 // @Failure		404	{object}	helper.Response
 // @Failure		500	{object}	helper.Response
-// @Router		/menus [get]
-func (controller MenuController) Index(ctx *gin.Context) {
-	menus, err := controller.service.List()
+// @Router		/menu-section [get]
+func (controller MenuSectionController) Index(ctx *gin.Context) {
+	menuSections, err := controller.service.List()
 
 	if err != nil {
-		resp := helper.ErrorJSON(ctx, "Menu not Found", http.StatusNotFound, nil)
+		resp := helper.ErrorJSON(ctx, "Menu Section not found", http.StatusNotFound, nil)
 
 		ctx.JSON(http.StatusNotFound, resp)
-
 		return
 	}
 
-	resp := helper.SuccessJSON(ctx, "Menu Found", http.StatusOK, menus)
+	resp := helper.SuccessJSON(ctx, "Menu section found", http.StatusOK, formatter.FormatMenuSections(menuSections))
+	// resp := helper.SuccessJSON(ctx, "Menu section found", http.StatusOK, menuSections)
 
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Summary		Get one menu
-// @Description	REST API menu
-// @Tags		Menus
+// @Summary		Get one menu section
+// @Description	REST API menu section
+// @Tags		Menu Sections
 // @Accept		json
 // @Produce		json
 // @Security	BearerAuth
@@ -57,8 +58,8 @@ func (controller MenuController) Index(ctx *gin.Context) {
 // @Failure		400	{object}	helper.Response
 // @Failure		404	{object}	helper.Response
 // @Failure		500	{object}	helper.Response
-// @Router		/menus/{id} [get]
-func (controller MenuController) Show(ctx *gin.Context) {
+// @Router		/menu-section/{id} [get]
+func (controller MenuSectionController) Show(ctx *gin.Context) {
 	ID := ctx.Param("id") // Get Param ID
 
 	menu, err := controller.service.FindById(ID)
@@ -76,9 +77,9 @@ func (controller MenuController) Show(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Summary		Insert menu
-// @Description	REST API menu
-// @Tags		Menus
+// @Summary		Insert menu section
+// @Description	REST API menu section
+// @Tags		Menu Sections
 // @Accept		json
 // @Produce		json
 // @Security	BearerAuth
@@ -87,12 +88,12 @@ func (controller MenuController) Show(ctx *gin.Context) {
 // @Failure		400		{object}	helper.Response
 // @Failure		404		{object}	helper.Response
 // @Failure		500		{object}	helper.Response
-// @Router		/menus [post]
-func (controller MenuController) Store(ctx *gin.Context) {
-	var menuReq request.MenuRequest
+// @Router		/menu-section [post]
+func (controller MenuSectionController) Store(ctx *gin.Context) {
+	var menuReq request.MenuSectionRequest
 
 	if err := ctx.ShouldBindJSON(&menuReq); err != nil {
-		resp := helper.ErrorJSON(ctx, "Failed to create menu", http.StatusBadRequest, err.Error())
+		resp := helper.ErrorJSON(ctx, "Failed to create menu section", http.StatusBadRequest, err.Error())
 
 		ctx.JSON(http.StatusBadRequest, resp)
 
@@ -102,7 +103,7 @@ func (controller MenuController) Store(ctx *gin.Context) {
 	errValidate := helper.ValidateFromStruct(menuReq)
 
 	if errValidate != nil {
-		resp := helper.ErrorJSON(ctx, "Failed to create menu", http.StatusBadRequest, errValidate)
+		resp := helper.ErrorJSON(ctx, "Failed to create menu section", http.StatusBadRequest, errValidate)
 
 		ctx.JSON(http.StatusBadRequest, resp)
 
@@ -112,21 +113,21 @@ func (controller MenuController) Store(ctx *gin.Context) {
 	menu, err := controller.service.Insert(menuReq)
 
 	if err != nil {
-		resp := helper.ErrorJSON(ctx, "Failed to create menu", http.StatusBadRequest, err.Error())
+		resp := helper.ErrorJSON(ctx, "Failed to create menu section", http.StatusBadRequest, err.Error())
 
 		ctx.JSON(http.StatusBadRequest, resp)
 
 		return
 	}
 
-	resp := helper.SuccessJSON(ctx, "Successfully Created Menu", http.StatusOK, menu)
+	resp := helper.SuccessJSON(ctx, "Successfully Created Menu Section", http.StatusOK, menu)
 
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Summary		Update menu
-// @Description	REST API menu
-// @Tags		Menus
+// @Summary		Update menu section
+// @Description	REST API menu section
+// @Tags		Menu Sections
 // @Accept		json
 // @Produce		json
 // @Security	BearerAuth
@@ -136,24 +137,24 @@ func (controller MenuController) Store(ctx *gin.Context) {
 // @Failure		400		{object}	helper.Response
 // @Failure		404		{object}	helper.Response
 // @Failure		500		{object}	helper.Response
-// @Router			/menus/{id} [put]
-func (controller MenuController) Update(ctx *gin.Context) {
+// @Router		/menu-section/{id} [put]
+func (controller MenuSectionController) Update(ctx *gin.Context) {
 	ID := ctx.Param("id") // Get Param ID
 
 	_, err := controller.service.FindById(ID)
 
 	if err != nil {
-		resp := helper.ErrorJSON(ctx, "Menu not Found", http.StatusNotFound, nil)
+		resp := helper.ErrorJSON(ctx, "Menu Section not Found", http.StatusNotFound, nil)
 
 		ctx.JSON(http.StatusOK, resp)
 
 		return
 	}
 
-	var updateReq request.MenuRequest
+	var updateReq request.MenuSectionRequest
 
 	if err := ctx.ShouldBindJSON(&updateReq); err != nil {
-		resp := helper.ErrorJSON(ctx, "Failed to update menu", http.StatusBadRequest, err.Error())
+		resp := helper.ErrorJSON(ctx, "Failed to update menu section", http.StatusBadRequest, err.Error())
 
 		ctx.JSON(http.StatusBadRequest, resp)
 
@@ -163,19 +164,19 @@ func (controller MenuController) Update(ctx *gin.Context) {
 	menu, err := controller.service.Update(updateReq, ID)
 
 	if err != nil {
-		resp := helper.ErrorJSON(ctx, "Failed to update menu", http.StatusBadRequest, err.Error())
+		resp := helper.ErrorJSON(ctx, "Failed to update menu section", http.StatusBadRequest, err.Error())
 
 		ctx.JSON(http.StatusBadRequest, resp)
 	}
 
-	resp := helper.SuccessJSON(ctx, "Successfully to Update Menu", http.StatusOK, menu)
+	resp := helper.SuccessJSON(ctx, "Successfully to Update Menu Section", http.StatusOK, menu)
 
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Summary		Delete menu
-// @Description	REST API menu
-// @Tags        Menus
+// @Summary		Delete menu section
+// @Description	REST API menu section
+// @Tags        Menu Sections
 // @Accept		json
 // @Produce		json
 // @Security	BearerAuth
@@ -184,8 +185,8 @@ func (controller MenuController) Update(ctx *gin.Context) {
 // @Failure		400	{object}	helper.Response
 // @Failure		404	{object}	helper.Response
 // @Failure		500	{object}	helper.Response
-// @Router			/menus/{id} [delete]
-func (controller MenuController) Delete(ctx *gin.Context) {
+// @Router		/menu-section/{id} [delete]
+func (controller MenuSectionController) Delete(ctx *gin.Context) {
 	ID := ctx.Param("id") // Get Param ID
 
 	_, err := controller.service.FindById(ID)

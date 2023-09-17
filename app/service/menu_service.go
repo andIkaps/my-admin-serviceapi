@@ -24,9 +24,9 @@ func NewMenuService(r repository.MenuRepository) MenuService {
 	}
 }
 
-//	@Summary		: List menu
-//	@Description	: Get menus from repository
-//	@Author			: andikaps
+// @Summary		: List menu
+// @Description	: Get menus from repository
+// @Author			: andikaps
 func (s *menuServiceImpl) List() ([]entity.Menu, error) {
 	menus, err := s.repository.FindAll()
 
@@ -37,17 +37,18 @@ func (s *menuServiceImpl) List() ([]entity.Menu, error) {
 	return menus, nil
 }
 
-//	@Summary		: Insert role
-//	@Description	: Get role to repository
-//	@Author			: andikaps
+// @Summary		: Insert menu
+// @Description	: Get menu to repository
+// @Author			: andikaps
 func (s *menuServiceImpl) Insert(req request.MenuRequest) (entity.Menu, error) {
 
 	menu := entity.Menu{
-		Name:     req.Name,
-		Url:      req.Url,
-		Icon:     req.Icon,
-		Ord:      req.Ord,
-		ParentID: req.ParentID,
+		Name:          req.Name,
+		Url:           req.Url,
+		Icon:          req.Icon,
+		Ord:           req.Ord,
+		ParentID:      req.ParentID,
+		MenuSectionID: req.MenuSectionID,
 	}
 
 	newMenu, err := s.repository.Insert(menu)
@@ -59,9 +60,9 @@ func (s *menuServiceImpl) Insert(req request.MenuRequest) (entity.Menu, error) {
 	return newMenu, nil
 }
 
-//	@Summary		: Find role
-//	@Description	: Find role by id from repository
-//	@Author			: andikaps
+// @Summary		: Find menu
+// @Description	: Find menu by id from repository
+// @Author			: andikaps
 func (s *menuServiceImpl) FindById(ID string) (entity.Menu, error) {
 	menu, err := s.repository.FindByID(ID)
 
@@ -72,9 +73,9 @@ func (s *menuServiceImpl) FindById(ID string) (entity.Menu, error) {
 	return menu, nil
 }
 
-//	@Summary		: Update role
-//	@Description	: Update role by id from repository
-//	@Author			: andikaps
+// @Summary		: Update menu
+// @Description	: Update menu by id from repository
+// @Author			: andikaps
 func (s *menuServiceImpl) Update(req request.MenuRequest, ID string) (entity.Menu, error) {
 
 	menu := entity.Menu{
@@ -94,9 +95,9 @@ func (s *menuServiceImpl) Update(req request.MenuRequest, ID string) (entity.Men
 	return updateMenu, nil
 }
 
-//	@Summary		: Delete role
-//	@Description	: Delete role to repository
-//	@Author			: andikaps
+// @Summary		: Delete menu
+// @Description	: Delete menu to repository
+// @Author			: andikaps
 func (s *menuServiceImpl) Delete(ID string) (bool, error) {
 	menu, err := s.repository.Delete(ID)
 

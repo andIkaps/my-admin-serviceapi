@@ -55,6 +55,17 @@ func (controller AuthController) Register(ctx *gin.Context) {
 		return
 	}
 
+	_, err := security.WeaknessPassword(registerReq.Password)
+
+	if err != nil {
+		resp := helper.ErrorJSON(ctx, "Password Weakness Detected", http.StatusBadRequest, err.Error())
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, resp)
+		// ctx.JSON(http.StatusBadRequest, resp)
+
+		return
+	}
+
 	register, err := controller.service.Insert(registerReq)
 
 	if err != nil {
@@ -116,9 +127,9 @@ func (controller AuthController) Login(ctx *gin.Context) {
 	findUser, _ := controller.service.FindByUsername(loginReq.Username)
 
 	if findUser.ID == "" {
-		resp := helper.ErrorJSON(ctx, "The Username or Password is Incorrect", http.StatusNotFound, nil)
+		resp := helper.ErrorJSON(ctx, "The Username or Password is Incorrect", http.StatusUnprocessableEntity, nil)
 
-		ctx.JSON(http.StatusNotFound, resp)
+		ctx.JSON(http.StatusUnprocessableEntity, resp)
 
 		return
 	}

@@ -12,6 +12,7 @@ func Migration(db Database) {
 	err := db.DB.AutoMigrate(
 		&entity.User{},
 		&entity.Role{},
+		&entity.MenuSection{},
 		&entity.Menu{},
 		&entity.Privilege{},
 		&entity.UserRole{},
